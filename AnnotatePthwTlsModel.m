@@ -1,5 +1,5 @@
 function [AnnotatedAmodel]=AnnotatePthwTlsModel(Amodel)
-% AnnotatePthwTlsModel parses a tab-delimited file for annotations. For each
+% AnnotatePthwTlsModel parses a tab-delimited file or an SMBL File for annotations. For each
 % entry in Amodel.rxnNames and Amodel.metNames it looks for additional info like ECNumbers 
 % or InChiStrings and transfers the info from the tab-delimited file into the     
 % corresponding vector in Amodel.
@@ -163,26 +163,26 @@ function [CleanAmodel]=ASCIISyntaxCleaner(Amodel)
 %(Code kindly provided by Jörg Büscher from BRAIN GmbH)
 disp('Clean up Pathway Tools export syntax');
 for ir = 1:length(Amodel.rxns)
-     Amodel.rxns{ir} = strrep(Amodel.rxns{ir},'_45_', char(45)) ;
-     Amodel.rxns{ir} = strrep(Amodel.rxns{ir},'_46_', char(46)) ;
-     Amodel.rxns{ir} = strrep(Amodel.rxns{ir},'_43_', char(43)) ;
+     Amodel.rxns{ir} = strrep(Amodel.rxns{ir},'__45__', char(45)) ;
+     Amodel.rxns{ir} = strrep(Amodel.rxns{ir},'__46__', char(46)) ;
+     Amodel.rxns{ir} = strrep(Amodel.rxns{ir},'__43__', char(43)) ;
      Amodel.rxns{ir} = strrep(Amodel.rxns{ir}, '-rxn','') ;
      Amodel.rxnNames{ir} = strrep(Amodel.rxnNames{ir}, '-RXN','') ;
      if isfield(Amodel,'rxnID')
-     Amodel.rxnID{ir} = strrep(Amodel.rxnID{ir},'_45_', char(45)) ;
-     Amodel.rxnID{ir} = strrep(Amodel.rxnID{ir},'_46_', char(46)) ;
-     Amodel.rxnID{ir} = strrep(Amodel.rxnID{ir},'_43_', char(43)) ;
+     Amodel.rxnID{ir} = strrep(Amodel.rxnID{ir},'__45__', char(45)) ;
+     Amodel.rxnID{ir} = strrep(Amodel.rxnID{ir},'__46__', char(46)) ;
+     Amodel.rxnID{ir} = strrep(Amodel.rxnID{ir},'__43__', char(43)) ;
      Amodel.rxnID{ir} = strrep(Amodel.rxnID{ir}, '-rxn','') ;
      end
 end
 for im = 1:length(Amodel.mets)
-     Amodel.mets{im} = strrep(Amodel.mets{im},'_45_', '_' ) ;
-     Amodel.mets{im} = strrep(Amodel.mets{im},'_43_', char(43) ) ;
-     Amodel.mets{im} = strrep(Amodel.mets{im},'_46_', char(46)) ;
+     Amodel.mets{im} = strrep(Amodel.mets{im},'__45__', '_' ) ;
+     Amodel.mets{im} = strrep(Amodel.mets{im},'__43__', char(43) ) ;
+     Amodel.mets{im} = strrep(Amodel.mets{im},'__46__', char(46)) ;
     if isfield(Amodel,'metID')
-     Amodel.metID{im} = strrep(Amodel.metID{im},'_45_', '_' ) ;
-     Amodel.metID{im} = strrep(Amodel.metID{im},'_43_', char(43) );
-     Amodel.metID{im} = strrep(Amodel.metID{im},'_46_', char(46)) ;
+     Amodel.metID{im} = strrep(Amodel.metID{im},'__45__', '_' ) ;
+     Amodel.metID{im} = strrep(Amodel.metID{im},'__43__', char(43) );
+     Amodel.metID{im} = strrep(Amodel.metID{im},'__46__', char(46)) ;
     end
 end
 CleanAmodel=Amodel;
