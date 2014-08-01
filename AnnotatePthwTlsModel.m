@@ -45,21 +45,25 @@ function [SMBLAnnotatedAmodel]=SBMLAnnotationParser(InputSBML,Amodel)
         if ~isempty(InputSBML.species(MetPos).notes)
         % Credit for the InChI-Sting Regexp goes to Lorenz Lo Sauer
         % (https://gist.github.com/lsauer)
-            Temp=regexp(InputSBML.species(MetPos).notes,'INCHI: ((InChI=)?[^J][0-9BCOHNSOPrIFla+\-\(\)\\\/,pqbtmsih]{6,})','match');
+            [Temp,~]=regexp(InputSBML.species(MetPos).notes,'<p>INCHI: (.*)</p>','match','dotexceptnewline');
                 if ~isempty(Temp)
-                Amodel.metInChIString(MetPos,1)=regexprep(Temp,'INCHI: InChI=','');
+                Temp=regexprep(Temp,'<p>INCHI: ','');
+                Amodel.metInChIString(MetPos,1)=regexprep(Temp,'</p>','');
                 end
-            Temp=regexp(InputSBML.species(MetPos).notes,'KEGG: C[0-9]{5}?','match');
+            [Temp,~]=regexp(InputSBML.species(MetPos).notes,'<p>KEGG: (.*)</p>','match','dotexceptnewline');
                 if ~isempty(Temp)
-                Amodel.metKEGGID(MetPos,1)=regexprep(Temp,'KEGG: ','');
+                Temp=regexprep(Temp,'<p>KEGG: ','');
+                Amodel.metKEGGID(MetPos,1)=regexprep(Temp,'</p>','');
                 end
-            Temp=regexp(InputSBML.species(MetPos).notes,'PUBCHEM: [0-9]*','match');
+            [Temp,~]=regexp(InputSBML.species(MetPos).notes,'<p>PUBCHEM: (.*)</p>','match','dotexceptnewline');
                 if ~isempty(Temp)
-                Amodel.metPubChemID(MetPos,1)=regexprep(Temp,'PUBCHEM: ','');
+                Temp=regexprep(Temp,'<p>PUBCHEM: ','');
+                Amodel.metPubChemID(MetPos,1)=regexprep(Temp,'</p>','');
                 end
-            Temp=regexp(InputSBML.species(MetPos).notes,'CHEBI: [0-9]*','match');
+            [Temp,~]=regexp(InputSBML.species(MetPos).notes,'<p>CHEBI: (.*)</p>','match','dotexceptnewline');
                 if ~isempty(Temp)
-                Amodel.metChEBIID(MetPos,1)=regexprep(Temp,'CHEBI: ','');
+                Temp=regexprep(Temp,'<p>CHEBI: ','');
+                Amodel.metChEBIID(MetPos,1)=regexprep(Temp,'</p>','');
                 end
         end
         %Counter%
